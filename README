@@ -1,0 +1,22 @@
+//Para correr la aplicación de manera local, se debe importar la base de datos de nombre be_betters.sql  empleando para más facilidad phpmyadmin
+//Se encuentra en la carpeta database
+be_better.sql
+
+------ Correr Servidor --------
+//Se debe entrar a la carpeta server del proyecto y digitar los siguientes comandos
+-> npm install
+
+//Luego se debe proceder a correr el servidor. El puerto para ejecutar el servidor es el 3050 
+-> node app.js
+//Para escuchar cambios en caso de querer modificar los archivos y reflejar en tiempo real
+->  nodemon
+
+----------Correr aplicación Angular Fronted --------
+//Posicionarse en la carpeta raíz client e instalar dependencias
+-> npm install 
+
+//Luego se procede a ejecutar la aplicación 
+->ng serve  
+// O para abrir en un navegador  
+-> ng serve -o  
+

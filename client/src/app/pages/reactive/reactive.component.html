@@ -1,0 +1,174 @@
+<div class="container mt-5">
+  <h3 id="formTop"> Personal <small> Profesional</small></h3>
+  <hr>
+  <form autocomplete="off" [formGroup]="formG" (ngSubmit)="save()">
+    <div class="form-group row" >
+      <label class="col-2 col-form-label">Cédula</label>
+      <div class="col">
+        <small *ngIf="invalidInput('cedula')" class="text-danger">Campo obligatorio </small>
+        <small *ngIf="verifyCC()" class="text-danger">Cédula ya existente </small>
+        <input class="form-control" autocomplete="off" type="text" [class.is-invalid]="invalidInput('cedula')"
+          placeholder="Ingrese cédula" formControlName="cedula">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre completo</label>
+      <div class="col">
+        <small *ngIf="invalidInput('nombreCompleto')" class="text-danger">Campo obligatorio </small>
+        <input class="form-control" autocomplete="off" type="text" [class.is-invalid]="invalidInput('nombreCompleto')"
+          placeholder="Ingrese nombre completo" formControlName="nombreCompleto">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Fecha nacimiento</label>
+      <div class="col">
+        <small *ngIf="invalidInput('fecha_nacimiento')" class="text-danger">Campo obligatorio </small>
+        <input class="form-control" autocomplete="off" type="date" id="start"
+          [class.is-invalid]="invalidInput('fecha_nacimiento')"  formControlName="fecha_nacimiento" min="1950-01-01"
+          max="2003-10-20">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Profesion</label>
+      <div class="col">
+        <small *ngIf="invalidInput('profesion')" class="text-danger">Campo obligatorio </small>
+        <input class="form-control" autocomplete="off" type="text" [class.is-invalid]="invalidInput('profesion')"
+          placeholder="Ingrese profesión" formControlName="profesion">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Dirección</label>
+      <div class="col">
+        <small *ngIf="invalidInput('direccion')" class="text-danger">Campo obligatorio </small>
+        <input class="form-control" autocomplete="off" type="text" [class.is-invalid]="invalidInput('direccion')"
+          placeholder="Ingrese dirección" formControlName="direccion">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Municipio</label>
+      <div class="col">
+        <small *ngIf="invalidInput('municipio')" class="text-danger">Campo obligatorio </small>
+        <input class="form-control" autocomplete="off" type="text" [class.is-invalid]="invalidInput('municipio')"
+          placeholder="Ingrese municipio" formControlName="municipio">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Teléfono</label>
+      <div class="col">
+        <small *ngIf="invalidInput('telefono')" class="text-danger">Campo obligatorio </small>
+        <input class="form-control" autocomplete="off" type="text" [class.is-invalid]="invalidInput('telefono')"
+          placeholder="Ingrese teléfono" formControlName="telefono">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Sexo</label>
+      <div class="col">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" [(ngModel)]="sex" [ngModelOptions]="{standalone: true}"
+            name="exampleRadios" id="exampleRadios1" value="M" checked>
+          <label class="form-check-label" for="exampleRadios1">
+            Masculino
+          </label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" [(ngModel)]="sex" [ngModelOptions]="{standalone: true}"
+            name="exampleRadios" id="exampleRadios2" value="F">
+          <label class="form-check-label" for="exampleRadios2">
+            Femenino
+          </label>
+        </div>
+      </div>
+      <div class="col-6">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Vehículo</label>
+      <div class="form-row col">
+        <div class="col">
+          <input type="text" class="form-control" autocomplete="off" placeholder="Tipo vehículo"
+            [class.is-invalid]="invalidInput('vehiculo')" formControlName="vehiculo">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" autocomplete="off" placeholder="Marca"
+            [class.is-invalid]="invalidInput('marca')" formControlName="marca">
+        </div>
+        <div class="col">
+
+          <input type="number" class="form-control" autocomplete="off" placeholder="Año"
+            [class.is-invalid]="invalidInput('anio')" formControlName="anio">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <ng-container *ngIf="!isEdit; else templatUpdate">
+        <label class="col-9 col-form-label">&nbsp;</label>
+        <div class="input-group col-md">
+          <button type="submit" class="btn btn-success btn-block">
+            Guardar
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #templatUpdate>
+        <label class="col-6 col-form-label">&nbsp;</label>
+        <div class="input-group col-md">
+          <button type="button" (click)="onReset()" class="btn btn-info btn-block">
+            Crear nuevo
+          </button>
+        </div>
+        <div class="input-group col-md">
+          <button type="button" (click)="save(true)" class="btn btn-primary btn-block">
+            Actualizar
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </form>
+</div>
+<ng-container *ngIf="tableLoaded; else templateLoading">
+  <div class="row">
+    <div class="col mx-5">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Nombre y apellido</th>
+            <th>Cédula</th>
+            <th>Fecha Nacimiento</th>
+            <th>Profesion</th>
+            <th>Dirección</th>
+            <th>Municipio</th>
+            <th>Telefono</th>
+            <th>Sexo</th>
+            <th>Vehículo</th>
+            <th>Marca</th>
+            <th>Año</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let personal of tablePersonalProfesional; let i = index">
+            <td scope="row">{{personal.nombre_completo}}</td>
+            <td>{{personal.cedula}}</td>
+            <td> {{personal.fecha_nacimiento | date:'yyyy-MM-dd' }}</td>
+            <td>{{personal.profesion}}</td>
+            <td>{{personal.direccion}}</td>
+            <td>{{personal.municipio}}</td>
+            <td>{{personal.telefono}}</td>
+            <td>{{personal.sexo}}</td>
+            <td>{{personal.vehiculo}}</td>
+            <td>{{personal.marca}}</td>
+            <td>{{personal.anio}}</td>
+            <td>
+              <button type="button" class="btn btn-outline-primary mx-2" (click)="getPersonalP(personal.cedula)">Editar</button>
+              <button type="button" class="btn btn-outline-danger" (click)="deletePersonalP(personal.cedula)">Borrar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+<ng-template #templateLoading>
+  <app-loading-view class="col-12"></app-loading-view>
+</ng-template>
